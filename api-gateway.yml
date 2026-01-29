@@ -2,6 +2,12 @@ server:
   port: 8080
 
 spring:
+  application:
+    name: api-gateway
+
+  main:
+    web-application-type: reactive   # 🔥 THIS IS THE KEY
+
   cloud:
     gateway:
       discovery:
