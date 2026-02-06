@@ -3,8 +3,6 @@ spring:
     name: department-service
 
   
-  logging:
-  config: classpath:logback-spring.xml
   datasource:
     url: jdbc:mysql://localhost:3306/department_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root

@@ -5,10 +5,7 @@ spring:
   application:
     name: api-gateway
 
-  
-logging:
-  config: classpath:logback-spring.xml
-  
+
   main:
     web-application-type: reactive   # 🔥 THIS IS THE KEY
 
