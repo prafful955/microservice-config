@@ -21,7 +21,7 @@ logging:
     root: INFO
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-          
+    io.github.resilience4j.retry: DEBUG     
 
 eureka:
   client:
@@ -29,6 +29,7 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka
+    
 
 management:
   endpoints:
