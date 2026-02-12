@@ -21,8 +21,7 @@ logging:
     root: INFO
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-    io.github.resilience4j.retry: DEBUG     
-    io.github.resilience4j.circuitbreaker: DEBUG
+    io.github.resilience4j: DEBUG
 
 eureka:
   client:
