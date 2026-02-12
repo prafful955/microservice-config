@@ -46,3 +46,17 @@ management:
         http:
           server:
             requests: true
+resilience4j:
+  retry:
+    instances:
+      departmentRetry:
+        max-attempts: 3
+        wait-duration: 1s
+        retry-exceptions:
+          - feign.RetryableException
+          - java.io.IOException
+
+  timelimiter:
+    instances:
+      departmentTimeout:
+        timeout-duration: 2s
