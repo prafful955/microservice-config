@@ -22,6 +22,7 @@ logging:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
     io.github.resilience4j.retry: DEBUG     
+    io.github.resilience4j.circuitbreaker: DEBUG
 
 eureka:
   client:
@@ -61,3 +62,12 @@ resilience4j:
     instances:
       departmentTimeout:
         timeout-duration: 2s
+
+  circuitbreaker:
+    instances:
+      departmentCircuit:
+        sliding-window-size: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 2
+        minimum-number-of-calls: 5
