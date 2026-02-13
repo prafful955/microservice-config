@@ -48,9 +48,21 @@ management:
           server:
             requests: true
 resilience4j:
+
+  circuitbreaker:
+    instances:
+      departmentService:
+        sliding-window-size: 5
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 2
+        slow-call-rate-threshold: 50
+        slow-call-duration-threshold: 2s
+
   retry:
     instances:
-      departmentRetry:
+      departmentService:
         max-attempts: 3
         wait-duration: 1s
         retry-exceptions:
@@ -59,14 +71,12 @@ resilience4j:
 
   timelimiter:
     instances:
-      departmentTimeout:
+      departmentService:
         timeout-duration: 2s
 
-  circuitbreaker:
+  thread-pool-bulkhead:
     instances:
-      departmentCircuit:
-        sliding-window-size: 5
-        failure-rate-threshold: 50
-        wait-duration-in-open-state: 10s
-        permitted-number-of-calls-in-half-open-state: 2
-        minimum-number-of-calls: 5
+      departmentService:
+        coreThreadPoolSize: 5
+        maxThreadPoolSize: 10
+        queueCapacity: 20
