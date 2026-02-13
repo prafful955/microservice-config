@@ -5,12 +5,17 @@ spring:
   application:
     name: api-gateway
 
-
   main:
-    web-application-type: reactive   # 🔥 THIS IS THE KEY
+    web-application-type: reactive
 
   cloud:
     gateway:
+
+      # 🔥 Gateway HTTP client timeout
+      httpclient:
+        connect-timeout: 2000
+        response-timeout: 3s
+
       discovery:
         locator:
           enabled: true
@@ -21,6 +26,11 @@ spring:
           uri: lb://EMPLOYEE-SERVICE
           predicates:
             - Path=/employees/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: employeeGatewayCircuit
+                fallbackUri: forward:/fallback/employee
 
         - id: department-service
           uri: lb://DEPARTMENT-SERVICE
@@ -37,14 +47,32 @@ management:
     web:
       exposure:
         include: health,info,metrics,env,beans,gateway,prometheus
+
   endpoint:
     health:
       show-details: always
     gateway:
       enabled: true
+
   metrics:
     distribution:
       percentiles-histogram:
         http:
           server:
             requests: true
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway: DEBUG
+    io.github.resilience4j.circuitbreaker: DEBUG
+    
+resilience4j:
+  circuitbreaker:
+    instances:
+      employeeGatewayCircuit:
+        sliding-window-size: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 2
+        minimum-number-of-calls: 5
