@@ -15,13 +15,24 @@ spring:
       ddl-auto: update
     show-sql: true
     open-in-view: false
-
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 logging:
   level:
     root: INFO
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
     io.github.resilience4j: DEBUG
+
+    # ✅ Kafka Logging
+    org.springframework.kafka: DEBUG
+    org.apache.kafka: INFO
+    org.apache.kafka.clients.producer: DEBUG
+    org.apache.kafka.clients.NetworkClient: INFO
+
 
 eureka:
   client:
@@ -80,8 +91,3 @@ resilience4j:
         coreThreadPoolSize: 5
         maxThreadPoolSize: 10
         queueCapacity: 20
-kafka:
-   bootstrap-servers: localhost:9092
-   producer:
-     key-serializer: org.apache.kafka.common.serialization.StringSerializer
-     value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
