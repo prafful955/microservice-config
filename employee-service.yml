@@ -80,3 +80,8 @@ resilience4j:
         coreThreadPoolSize: 5
         maxThreadPoolSize: 10
         queueCapacity: 20
+kafka:
+   bootstrap-servers: localhost:9092
+   producer:
+     key-serializer: org.apache.kafka.common.serialization.StringSerializer
+     value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
