@@ -9,21 +9,16 @@ spring:
       group-id: notification-group
       auto-offset-reset: earliest
 
-      # Use ErrorHandlingDeserializer (production safe)
       key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
 
       properties:
-        # Delegate actual deserializers
         spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
         spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
 
-        # JSON configuration
         spring.json.trusted.packages: "*"
         spring.json.use.type.headers: false
-
-        # ⚠️ CHANGE this to your actual event class package
-        spring.json.value.default.type: com.praful.notification.dto.EmployeeEvent
+        spring.json.value.default.type: com.praful.notificationservice.event.EmployeeCreatedEvent
 
 eureka:
   client:
@@ -41,4 +36,4 @@ logging:
     root: INFO
     org.apache.kafka: INFO
     org.springframework.kafka: DEBUG
-    com.praful.notification: DEBUG
+    com.praful.notificationservice: DEBUG
